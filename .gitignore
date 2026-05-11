@@ -216,3 +216,11 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Node-RED runtime data: escludiamo cache, log e moduli scaricati
+nodered/data/.npm/
+nodered/data/.config.runtime.json
+nodered/data/.config.runtime.json.backup
+nodered/data/node_modules/
+nodered/data/.cache/
+nodered/data/.flows.json.backup

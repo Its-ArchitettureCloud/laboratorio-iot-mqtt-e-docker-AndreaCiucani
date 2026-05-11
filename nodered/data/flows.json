@@ -1,0 +1,316 @@
+[
+    {
+        "id": "b31e08d3b94aaa2b",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "e68f922f3704e78e",
+        "type": "mqtt-broker",
+        "name": "Mosquitto locale",
+        "broker": "mosquitto",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "b620d6535c559349",
+        "type": "ui-base",
+        "name": "My Dashboard",
+        "path": "/dashboard",
+        "appIcon": "",
+        "includeClientData": true,
+        "acceptsClientConfig": [
+            "ui-notification",
+            "ui-control"
+        ],
+        "showPathInSidebar": false,
+        "headerContent": "page",
+        "navigationStyle": "default",
+        "titleBarStyle": "default",
+        "showReconnectNotification": true,
+        "notificationDisplayTime": 1,
+        "showDisconnectNotification": true,
+        "allowInstall": false
+    },
+    {
+        "id": "77009be27bb6681c",
+        "type": "ui-theme",
+        "name": "Default Theme",
+        "colors": {
+            "surface": "#ffffff",
+            "primary": "#0094CE",
+            "bgPage": "#eeeeee",
+            "groupBg": "#ffffff",
+            "groupOutline": "#cccccc"
+        },
+        "sizes": {
+            "density": "default",
+            "pagePadding": "12px",
+            "groupGap": "12px",
+            "groupBorderRadius": "4px",
+            "widgetGap": "12px"
+        }
+    },
+    {
+        "id": "13a22dc292b9c03c",
+        "type": "ui-page",
+        "name": "IoTMonitoring",
+        "ui": "b620d6535c559349",
+        "path": "/IoTMonitoring",
+        "icon": "home",
+        "layout": "grid",
+        "theme": "77009be27bb6681c",
+        "breakpoints": [
+            {
+                "name": "Default",
+                "px": "0",
+                "cols": "3"
+            },
+            {
+                "name": "Tablet",
+                "px": "576",
+                "cols": "6"
+            },
+            {
+                "name": "Small Desktop",
+                "px": "768",
+                "cols": "9"
+            },
+            {
+                "name": "Desktop",
+                "px": "1024",
+                "cols": "12"
+            }
+        ],
+        "order": 1,
+        "className": "",
+        "visible": "true",
+        "disabled": "false"
+    },
+    {
+        "id": "4a5359cad2d33c15",
+        "type": "ui-group",
+        "name": "IoTMonitoring",
+        "page": "13a22dc292b9c03c",
+        "width": 6,
+        "height": 1,
+        "order": 1,
+        "showTitle": true,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "18a7a2f0e02b9c08",
+        "type": "mqtt in",
+        "z": "b31e08d3b94aaa2b",
+        "name": "temperatura",
+        "topic": "iot/aula/+/temperatura",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "e68f922f3704e78e",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 90,
+        "y": 120,
+        "wires": [
+            [
+                "77a09c14ee588340",
+                "3f1eb1f32bb0305e",
+                "9f66c03cb50b006f"
+            ]
+        ]
+    },
+    {
+        "id": "77a09c14ee588340",
+        "type": "ui-gauge",
+        "z": "b31e08d3b94aaa2b",
+        "name": "Temperatura Sensore",
+        "group": "4a5359cad2d33c15",
+        "order": 1,
+        "value": "payload",
+        "valueType": "msg",
+        "width": 3,
+        "height": 3,
+        "gtype": "gauge-half",
+        "gstyle": "needle",
+        "title": "Temperatura",
+        "alwaysShowTitle": false,
+        "floatingTitlePosition": "top-left",
+        "units": "°C",
+        "icon": "",
+        "prefix": "",
+        "suffix": "",
+        "segments": [
+            {
+                "from": "0",
+                "color": "#5cd65c",
+                "text": "",
+                "textType": "label"
+            },
+            {
+                "from": "4",
+                "color": "#ffc800",
+                "text": "",
+                "textType": "label"
+            },
+            {
+                "from": "7",
+                "color": "#ea5353",
+                "text": "",
+                "textType": "label"
+            }
+        ],
+        "min": 0,
+        "max": "50",
+        "sizeThickness": 16,
+        "sizeGap": 4,
+        "sizeKeyThickness": 8,
+        "styleRounded": true,
+        "styleGlow": false,
+        "className": "",
+        "x": 340,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3f1eb1f32bb0305e",
+        "type": "switch",
+        "z": "b31e08d3b94aaa2b",
+        "name": "Soglia 30°C",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "30",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 310,
+        "y": 200,
+        "wires": [
+            [
+                "b4a79c49101c3328"
+            ]
+        ]
+    },
+    {
+        "id": "b4a79c49101c3328",
+        "type": "function",
+        "z": "b31e08d3b94aaa2b",
+        "name": "Testo Email",
+        "func": "msg.payload = `ATTENZIONE\nTemperatura elevata rilevata!\n\nValore: ${msg.payload} °C\nSensore: ${msg.topic}\n\nSistema IoT - Laboratorio ITS`;\n\nmsg.topic = \"Alert temperatura elevata\";\nmsg.from = \"no-reply@nodered.local\";\n\n// Forziamo nodemailer a NON tentare autenticazione SMTP\nmsg.userid = \"\";\nmsg.password = \"\";\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 200,
+        "wires": [
+            [
+                "d77ea49986cea6fc"
+            ]
+        ]
+    },
+    {
+        "id": "d77ea49986cea6fc",
+        "type": "e-mail",
+        "z": "b31e08d3b94aaa2b",
+        "server": "mailhog",
+        "port": "1025",
+        "authtype": "NONE",
+        "saslformat": true,
+        "token": "oauth2Response.access_token",
+        "secure": false,
+        "tls": false,
+        "name": "alert@iot.local",
+        "dname": "Allarme temperatura elevata",
+        "x": 760,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "9f66c03cb50b006f",
+        "type": "function",
+        "z": "b31e08d3b94aaa2b",
+        "name": "Aggrega sensori",
+        "func": "// Recupera la mappa salvata (o inizializzala vuota)\nlet sensori = context.get(\"sensori\") || {};\n\n// Estrai il sensor_id dal topic: iot/aula/sensorXX/temperatura\nconst parts = msg.topic.split(\"/\");\nconst sensorId = parts[2];\n\n// Aggiorna la mappa con l'ultima temperatura\nsensori[sensorId] = {\n    sensore: sensorId,\n    temperatura: parseFloat(msg.payload),\n    ultimo_aggiornamento: new Date().toLocaleTimeString()\n};\n\ncontext.set(\"sensori\", sensori);\n\n// Array ordinato per id sensore (ordine fisso)\nconst rows = Object.values(sensori).sort((a, b) =>\n    a.sensore.localeCompare(b.sensore)\n);\n\n// Output esplicito per la dashboard table:\n// payload = array completo che sostituisce la tabella\nmsg.payload = rows;\n\n// Alcune table widget vogliono questo per fare \"replace\"\nmsg.action = \"replace\";\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 300,
+        "wires": [
+            [
+                "a5b8d41260ac6e6f"
+            ]
+        ]
+    },
+    {
+        "id": "a5b8d41260ac6e6f",
+        "type": "ui-table",
+        "z": "b31e08d3b94aaa2b",
+        "group": "4a5359cad2d33c15",
+        "name": "",
+        "label": "Sensori Attivi",
+        "order": 0,
+        "width": "0",
+        "height": "0",
+        "maxrows": 0,
+        "passthru": false,
+        "autocols": true,
+        "showSearch": true,
+        "deselect": true,
+        "selectionType": "none",
+        "columns": [],
+        "mobileBreakpoint": "sm",
+        "mobileBreakpointType": "defaults",
+        "action": "replace",
+        "className": "",
+        "x": 530,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    }
+]
