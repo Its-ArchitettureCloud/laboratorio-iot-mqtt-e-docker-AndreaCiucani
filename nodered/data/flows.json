@@ -145,7 +145,8 @@
         "wires": [
             [
                 "77a09c14ee588340",
-                "3f1eb1f32bb0305e"
+                "3f1eb1f32bb0305e",
+                "9f66c03cb50b006f"
             ]
         ]
     },
@@ -197,8 +198,8 @@
         "styleRounded": true,
         "styleGlow": false,
         "className": "",
-        "x": 300,
-        "y": 120,
+        "x": 340,
+        "y": 80,
         "wires": [
             []
         ]
@@ -220,8 +221,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 130,
-        "y": 220,
+        "x": 310,
+        "y": 200,
         "wires": [
             [
                 "b4a79c49101c3328"
@@ -240,8 +241,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 130,
-        "y": 320,
+        "x": 510,
+        "y": 200,
         "wires": [
             [
                 "d77ea49986cea6fc"
@@ -261,8 +262,55 @@
         "tls": false,
         "name": "alert@iot.local",
         "dname": "Allarme temperatura elevata",
-        "x": 160,
-        "y": 440,
+        "x": 760,
+        "y": 200,
         "wires": []
+    },
+    {
+        "id": "9f66c03cb50b006f",
+        "type": "function",
+        "z": "b31e08d3b94aaa2b",
+        "name": "Aggrega sensori",
+        "func": "// Recupera la mappa salvata (o inizializzala vuota)\nlet sensori = context.get(\"sensori\") || {};\n\n// Estrai il sensor_id dal topic: iot/aula/sensorXX/temperatura\nconst parts = msg.topic.split(\"/\");\nconst sensorId = parts[2];\n\n// Aggiorna la mappa con l'ultima temperatura\nsensori[sensorId] = {\n    sensore: sensorId,\n    temperatura: parseFloat(msg.payload),\n    ultimo_aggiornamento: new Date().toLocaleTimeString()\n};\n\ncontext.set(\"sensori\", sensori);\n\n// Array ordinato per id sensore (ordine fisso)\nconst rows = Object.values(sensori).sort((a, b) =>\n    a.sensore.localeCompare(b.sensore)\n);\n\n// Output esplicito per la dashboard table:\n// payload = array completo che sostituisce la tabella\nmsg.payload = rows;\n\n// Alcune table widget vogliono questo per fare \"replace\"\nmsg.action = \"replace\";\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 300,
+        "wires": [
+            [
+                "a5b8d41260ac6e6f"
+            ]
+        ]
+    },
+    {
+        "id": "a5b8d41260ac6e6f",
+        "type": "ui-table",
+        "z": "b31e08d3b94aaa2b",
+        "group": "4a5359cad2d33c15",
+        "name": "",
+        "label": "Sensori Attivi",
+        "order": 0,
+        "width": "0",
+        "height": "0",
+        "maxrows": 0,
+        "passthru": false,
+        "autocols": true,
+        "showSearch": true,
+        "deselect": true,
+        "selectionType": "none",
+        "columns": [],
+        "mobileBreakpoint": "sm",
+        "mobileBreakpointType": "defaults",
+        "action": "replace",
+        "className": "",
+        "x": 530,
+        "y": 300,
+        "wires": [
+            []
+        ]
     }
 ]
